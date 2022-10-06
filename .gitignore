@@ -1,0 +1,11 @@
+#ignore all .Next 
+.next
+
+#ignore Node Modules
+node_modules/
+
+#ignore out
+out/
+
+#ignore DS_Store
+.DS_Store
