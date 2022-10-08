@@ -6,9 +6,7 @@ import styles from "../styles/Home.module.css";
 
 export default function Header() {
   // Helpful thirdweb hooks to connect and manage the wallet from metamask.
-  const address = useAddress();
-  const connectWithMetamask = useMetamask();
-  const disconnectWallet = useDisconnect();
+
 
   return (
 
@@ -132,34 +130,7 @@ export default function Header() {
             </li>
 
 
-            <li>
-              <div className="flex flex-col items-center text-center justify-center md:pr-8 mt-3">
-                {address ? (
-                  <>
-                    <a
-                      className="font-bold items-center bg-primary1 border-0 py-2 px-3 focus:outline-none hover:bg-gray-800  rounded  text-gray-100  flex"
-                      onClick={() => disconnectWallet()}
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
-                      </svg>
-
-                      Disconnect Wallet | {address.slice(0, 6).concat("...").concat(address.slice(-4))}
-                    </a>
-
-                  </>
-                ) : (
-                  <a
-                    className="font-bold items-center bg-primary2  border-0 py-2 px-3 focus:outline-none  hover:bg-primary1  rounded text-gray-100 flex"
-                    onClick={() => connectWithMetamask()}
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
-                    </svg> Connect Wallet
-                  </a>
-                )}
-              </div>
-            </li>
+     
             <li>
               <div className="flex flex-col items-center text-center justify-center md:pr-8">
                 <button

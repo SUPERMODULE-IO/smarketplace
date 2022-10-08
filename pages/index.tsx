@@ -9,15 +9,7 @@ import {
 import { useRouter } from "next/router";
 
 const Home: NextPage = () => {
-  const router = useRouter();
 
-  // Connect your marketplace smart contract here (replace this address)
-  const marketplace = useMarketplace(
-    "0x71EE5708D7f1D9D84cE72BFCB2e4220A1Ed3D800" // Your marketplace contract address here
-  );
-
-  const { data: listings, isLoading: loadingListings } =
-    useActiveListings(marketplace);
 
   return (
     <>
@@ -41,54 +33,7 @@ const Home: NextPage = () => {
             </Link>
           </div>
 
-          <div className="main">
-            {
-              // If the listings are loading, show a loading message
-              loadingListings ? (
-                <div className="flex">
-                  <svg id="joinSpinner" className="animate-spin h-6 w-6 border-color-white mr-3" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
-                    </path>
-                  </svg>
-                  Loading...
 
-                </div>
-
-              ) : (
-                // Otherwise, show the listings
-                <div className={styles.listingGrid}>
-                  {listings?.map((listing) => (
-                    <div
-                      key={listing.id}
-                      className={styles.listingShortView}
-                      onClick={() => router.push(`/listing/${listing.id}`)}
-                    >
-                      <MediaRenderer className=" rounded-t-lg"
-                        src={listing.asset.image}
-                        style={{
-
-                          // Fit the image to the container
-                          width: "100%",
-                          height: "100%",
-                        }}
-                      />
-                      <h2 className={styles.nameContainer}>
-                        <Link href={`/listing/${listing.id}`}>
-                          <a className="text-xl font-bold text-primary2">{listing.asset.name}</a>
-                        </Link>
-                      </h2>
-
-                      <p>
-                        <b>{listing.buyoutCurrencyValuePerToken.displayValue}</b>{" "}
-                        {listing.buyoutCurrencyValuePerToken.symbol}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              )
-            }
-          </div>
         </div>
       </section>
     </>
