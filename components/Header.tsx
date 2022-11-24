@@ -1,14 +1,39 @@
 import { useAddress, useMetamask, useDisconnect } from "@thirdweb-dev/react";
 import Link from "next/link";
-import React from "react";
+import Script from "next/script";
+import React, { useEffect, useState } from "react";
 
-import styles from "../styles/Home.module.css";
 
 export default function Header() {
   // Helpful thirdweb hooks to connect and manage the wallet from metamask.
   const address = useAddress();
   const connectWithMetamask = useMetamask();
   const disconnectWallet = useDisconnect();
+
+  if (typeof window !== 'undefined')
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.add('dark');
+      localStorage.theme = 'dark';
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.theme = 'light';
+    }
+
+  const toggleDarkMode = function () {
+    if (localStorage.theme == 'dark') {
+      document.documentElement.classList.remove('dark');
+      localStorage.theme = 'light';
+    } else {
+      document.documentElement.classList.add('dark');
+      localStorage.theme = 'dark';
+    }
+  }
+
+
+  const menuToogle = function () {
+    const menu = document.querySelector('#menu');
+    menu?.classList.toggle('hidden');
+  }
 
   return (
 
@@ -72,6 +97,7 @@ export default function Header() {
         <svg
           xmlns="http://www.w3.org/2000/svg"
           id="menu-button"
+          onClick={menuToogle}
           className="flex-none h-6 w-6 cursor-pointer lg:hidden block"
           fill="none"
           viewBox="0 0 24 24"
@@ -164,6 +190,7 @@ export default function Header() {
               <div className="flex flex-col items-center text-center justify-center md:pr-8">
                 <button
                   id="colorswitch"
+                  onClick={toggleDarkMode}
                   name="colorswitch"
                   aria-label="Change Theme"
                   className="items-center mt-3 bg-gray-100 border-0 py-2 px-2 focus:outline-none hover:bg-gray-800 dark:hover:bg-gray-200  rounded-full text-base  dark:bg-gray-800 dark:text-gray-100 "
@@ -181,15 +208,11 @@ export default function Header() {
         </div>
       </nav>
 
-      <div className={styles.left}>
-        <div>
 
-        </div>
-      </div>
-      <div className={styles.right}>
-
-      </div>
 
     </header>
+
+
+
   );
 }

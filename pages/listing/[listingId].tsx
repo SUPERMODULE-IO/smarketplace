@@ -1,15 +1,17 @@
 import {
   MediaRenderer,
-  useMarketplace,
   useNetwork,
   useNetworkMismatch,
   useListing,
+  useContract,
 } from "@thirdweb-dev/react";
 import { ChainId, ListingType, NATIVE_TOKENS } from "@thirdweb-dev/sdk";
 import type { NextPage } from "next";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import styles from "../../styles/Home.module.css";
+import Header from "../../components/Header";
+
 
 const ListingPage: NextPage = () => {
   // Next JS Router hook to redirect to other pages and to grab the query from the URL (listingId)
@@ -25,9 +27,7 @@ const ListingPage: NextPage = () => {
   const [, switchNetwork] = useNetwork();
 
   // Initialize the marketplace contract
-  const marketplace = useMarketplace(
-    "0x71EE5708D7f1D9D84cE72BFCB2e4220A1Ed3D800" // Your marketplace contract address here
-  );
+  const { contract: marketplace } = useContract("0x617c36B652c41d6e442B5a9CCf4De6Ff37478Ab6", "marketplace");;
 
 
 
@@ -43,11 +43,11 @@ const ListingPage: NextPage = () => {
   const [bidAmount, setBidAmount] = useState<string>("");
 
   if (loadingListing) {
-    return <div className={styles.loadingOrError}>Loading...</div>;
+    return <div className="{styles.loadingOrError}">Loading...</div>;
   }
 
   if (!listing) {
-    return <div className={styles.loadingOrError}>Listing not found</div>;
+    return <div className="{styles.loadingOrError}">Listing not found</div>;
   }
 
 
@@ -65,7 +65,7 @@ const ListingPage: NextPage = () => {
         await marketplace?.direct.makeOffer(
           listingId, // The listingId of the listing we want to make an offer for
           1, // Quantity = 1
-          NATIVE_TOKENS[ChainId.Rinkeby].wrapped.address, // Wrapped Ether address on Rinkeby
+          NATIVE_TOKENS[ChainId.Polygon].wrapped.address, // Wrapped Ether address on Rinkeby
           bidAmount // The offer amount the user entered
         );
       }
@@ -103,16 +103,18 @@ const ListingPage: NextPage = () => {
   }
 
   return (
-    <div className={styles.container} style={{}}>
-      <div className={styles.listingContainer}>
-        <div className={styles.leftListing}>
+    <>
+    <Header/>
+    <div className="{styles.container}" style={{}}>
+      <div className="{styles.listingContainer}">
+        <div className="{styles.leftListing}">
           <MediaRenderer
             src={listing.asset.animation_url ? listing.asset.animation_url : listing.asset.image}
-            className={styles.mainNftImage}
+            className="{styles.mainNftImage}"
           />
         </div>
 
-        <div className={styles.rightListing}>
+        <div className="{styles.rightListing}">
           <h1>{listing.asset.name}</h1>
           <p>
             Owned by{" "}
@@ -179,7 +181,7 @@ const ListingPage: NextPage = () => {
             <input
               type="text"
               name="bidAmount"
-              className={styles.textInput}
+              className="{styles.textInput}"
               onChange={(e) => setBidAmount(e.target.value)}
               placeholder="Amount"
               style={{ marginTop: 0, marginLeft: 0, width: 128 }}
@@ -188,6 +190,7 @@ const ListingPage: NextPage = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

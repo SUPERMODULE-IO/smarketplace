@@ -1,12 +1,11 @@
-import styles from "../../styles/Thirdweb.module.css";
 import React from "react";
 
-export default function ThirdwebGuideFooter() {
-  const url = "https://github.com/thirdweb-example/marketplace-next-ts";
+export default function Footer() {
+
   return (
     <>
       
-  <footer className="bg-lfoot dark:bg-dfoot body-font border-t border-dborder shadow-inner mt-auto">
+  <footer className="bg-lfoot dark:bg-dfoot body-font border-t border-dborder shadow-inner mt-auto w-full">
     <div
       className="container px-5 py-24 mx-auto flex md:items-center lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col">
       <div className="w-64 flex-shrink-0 md:mx-0 mx-auto text-center md:text-left">
